@@ -1,5 +1,10 @@
-import { HiDocumentText, HiViewColumns, HiGlobeAlt, HiHome } from "react-icons/hi2";
-import Image from "next/image";
+import {
+  HiDocumentText,
+  HiViewColumns,
+  HiGlobeAlt,
+  HiHome,
+} from "react-icons/hi2";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -22,16 +27,13 @@ export default function Home() {
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
+          <Link
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
             href="/1aff1864-ebb8-4967-b031-c0fa411b2569"
           >
-            <HiHome
-              className="text-foreground:invert"
-              size={20}
-            />
+            <HiHome className="text-foreground:invert" size={20} />
             Demo
-          </a>
+          </Link>
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
@@ -49,10 +51,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <HiDocumentText
-            className="text-foreground"
-            size={16}
-          />
+          <HiDocumentText className="text-foreground" size={16} />
           Learn
         </a>
         <a
@@ -61,10 +60,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <HiViewColumns
-            className="text-foreground"
-            size={16}
-          />
+          <HiViewColumns className="text-foreground" size={16} />
           Examples
         </a>
         <a
@@ -73,10 +69,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <HiGlobeAlt
-            className="text-foreground"
-            size={16}
-          />
+          <HiGlobeAlt className="text-foreground" size={16} />
           Go to nextjs.org →
         </a>
       </footer>

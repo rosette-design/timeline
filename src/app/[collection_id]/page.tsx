@@ -1,71 +1,78 @@
-import { supabase, Collection, Moment, User } from '@/lib/supabase'
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import { HiHome, HiMapPin, HiClock, HiCheckCircle, HiArrowLeft } from "react-icons/hi2";
+import { supabase, Collection, Moment, User } from "@/lib/supabase";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import {
+  HiHome,
+  HiMapPin,
+  HiClock,
+  HiCheckCircle,
+  HiArrowLeft,
+} from "react-icons/hi2";
+import Link from "next/link";
 
 interface PageProps {
   params: Promise<{
-    collection_id: string
-  }>
+    collection_id: string;
+  }>;
 }
 
 async function getCollection(id: string): Promise<Collection | null> {
   const { data, error } = await supabase
-    .from('collections')
-    .select('*')
-    .eq('id', id)
-    .single()
+    .from("collections")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (error) {
-    console.error('Error fetching collection:', error)
-    return null
+    console.error("Error fetching collection:", error);
+    return null;
   }
 
-  return data
+  return data;
 }
 
 async function getUser(id: string): Promise<User | null> {
   const { data, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', id)
-    .single()
+    .from("users")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (error) {
-    console.error('Error fetching user:', error)
-    return null
+    console.error("Error fetching user:", error);
+    return null;
   }
 
-  return data
+  return data;
 }
 
 async function getMoments(collectionId: string): Promise<Moment[]> {
   const { data, error } = await supabase
-    .from('moments')
-    .select('*')
-    .eq('collection_id', collectionId)
-    .order('started_at', { ascending: false })
+    .from("moments")
+    .select("*")
+    .eq("collection_id", collectionId)
+    .order("started_at", { ascending: false });
 
   if (error) {
-    console.error('Error fetching moments:', error)
-    return []
+    console.error("Error fetching moments:", error);
+    return [];
   }
 
-  return data || []
+  return data || [];
 }
 
 export default async function CollectionPage({ params }: PageProps) {
-  const { collection_id } = await params
-  const collection = await getCollection(collection_id)
-  
+  const { collection_id } = await params;
+  const collection = await getCollection(collection_id);
+
   if (!collection) {
-    notFound()
+    notFound();
   }
 
   const [user, moments] = await Promise.all([
     getUser(collection.user_id),
-    getMoments(collection_id)
-  ])
+    getMoments(collection_id),
+  ]);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -76,14 +83,16 @@ export default async function CollectionPage({ params }: PageProps) {
 
         <div className="w-full">
           <h1 className="text-4xl font-bold mb-4">{collection.name}</h1>
-          
+
           {user && (
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-6">
               <h3 className="text-lg font-semibold mb-2">Collection Owner</h3>
               <div className="flex flex-col gap-1">
                 <p className="font-medium">{user.name}</p>
                 {user.email && (
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{user.email}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {user.email}
+                  </p>
                 )}
                 <p className="text-xs text-gray-500">
                   Member since: {new Date(user.created_at).toLocaleDateString()}
@@ -91,10 +100,12 @@ export default async function CollectionPage({ params }: PageProps) {
               </div>
             </div>
           )}
-          
+
           <div className="flex flex-col gap-2 text-sm text-gray-500 mb-8">
             <p>Collection ID: {collection.id}</p>
-            <p>Created: {new Date(collection.created_at).toLocaleDateString()}</p>
+            <p>
+              Created: {new Date(collection.created_at).toLocaleDateString()}
+            </p>
           </div>
         </div>
 
@@ -102,7 +113,7 @@ export default async function CollectionPage({ params }: PageProps) {
           <h2 className="text-2xl font-semibold mb-6">
             Moments ({moments.length})
           </h2>
-          
+
           {moments.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               <p>No moments found in this collection.</p>
@@ -146,15 +157,18 @@ export default async function CollectionPage({ params }: PageProps) {
                       <div className="flex items-center gap-1">
                         <HiMapPin className="text-blue-500" size={16} />
                         <span>
-                          {[moment.city, moment.country].filter(Boolean).join(', ')}
+                          {[moment.city, moment.country]
+                            .filter(Boolean)
+                            .join(", ")}
                         </span>
                       </div>
                     )}
-                    
+
                     <div className="flex items-center gap-1">
                       <HiClock className="text-orange-500" size={16} />
                       <span>
-                        Started: {new Date(moment.started_at).toLocaleDateString()} at{' '}
+                        Started:{" "}
+                        {new Date(moment.started_at).toLocaleDateString()} at{" "}
                         {new Date(moment.started_at).toLocaleTimeString()}
                       </span>
                     </div>
@@ -163,7 +177,9 @@ export default async function CollectionPage({ params }: PageProps) {
                       <div className="flex items-center gap-1">
                         <HiCheckCircle className="text-green-500" size={16} />
                         <span>
-                          Completed: {new Date(moment.completed_at).toLocaleDateString()} at{' '}
+                          Completed:{" "}
+                          {new Date(moment.completed_at).toLocaleDateString()}{" "}
+                          at{" "}
                           {new Date(moment.completed_at).toLocaleTimeString()}
                         </span>
                       </div>
@@ -184,28 +200,25 @@ export default async function CollectionPage({ params }: PageProps) {
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row mt-8">
-          <a
+          <Link
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             href="/"
           >
             <HiArrowLeft size={20} />
             Back to Home
-          </a>
+          </Link>
         </div>
       </main>
-      
+
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
+        <Link
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="/"
         >
-          <HiHome
-            className="text-foreground"
-            size={16}
-          />
+          <HiHome className="text-foreground" size={16} />
           Home
-        </a>
+        </Link>
       </footer>
     </div>
-  )
-} 
+  );
+}

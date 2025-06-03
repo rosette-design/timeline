@@ -1,4 +1,5 @@
 import { HiArrowLeft, HiHome } from "react-icons/hi2";
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -9,35 +10,33 @@ export default function NotFound() {
         </h1>
 
         <div className="w-full">
-          <h1 className="text-4xl font-bold mb-4">Collection Not Found</h1> 
+          <h1 className="text-4xl font-bold mb-4">Collection Not Found</h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-            The collection you're looking for doesn't exist or has been removed.
+            The collection you&apos;re looking for doesn&apos;t exist or has
+            been removed.
           </p>
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
+          <Link
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             href="/"
           >
             <HiArrowLeft size={20} />
             Back to Home
-          </a>
+          </Link>
         </div>
       </main>
-      
+
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
+        <Link
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
           href="/"
         >
-          <HiHome
-            className="text-foreground"
-            size={16}
-          />
+          <HiHome className="text-foreground" size={16} />
           Home
-        </a>
+        </Link>
       </footer>
     </div>
-  )
-} 
+  );
+}

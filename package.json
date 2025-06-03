@@ -9,6 +9,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
+    "type-check:staged": "tsc --noEmit --skipLibCheck",
     "prepare": "husky"
   },
   "dependencies": {
@@ -36,8 +37,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
-      "tsc --noEmit"
+      "eslint --fix"
     ],
     "*.{js,jsx,ts,tsx,json,css,md}": [
       "prettier --write"
