@@ -10,6 +10,10 @@ import {
 } from "react-icons/hi2";
 import Link from "next/link";
 
+// Force dynamic rendering and disable caching
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface PageProps {
   params: Promise<{
     collection_id: string;
