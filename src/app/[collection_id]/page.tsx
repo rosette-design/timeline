@@ -16,6 +16,23 @@ interface PageProps {
   }>;
 }
 
+export async function generateStaticParams() {
+  const { data: collections, error } = await supabase
+    .from("collections")
+    .select("id");
+
+  if (error) {
+    console.error("Error fetching collections for static generation:", error);
+    return [];
+  }
+
+  return (
+    collections?.map((collection) => ({
+      collection_id: collection.id,
+    })) || []
+  );
+}
+
 async function getCollection(id: string): Promise<Collection | null> {
   const { data, error } = await supabase
     .from("collections")
