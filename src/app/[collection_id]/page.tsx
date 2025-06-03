@@ -1,5 +1,4 @@
 import { supabase, Collection, Moment, User } from "@/lib/supabase";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   HiHome,
@@ -9,6 +8,7 @@ import {
   HiArrowLeft,
 } from "react-icons/hi2";
 import Link from "next/link";
+import MediaDisplay from "@/components/MediaDisplay";
 
 interface PageProps {
   params: Promise<{
@@ -68,7 +68,7 @@ async function getMoments(collectionId: string): Promise<Moment[]> {
     .from("moments")
     .select("*")
     .eq("collection_id", collectionId)
-    .order("started_at", { ascending: false });
+    .order("started_at", { ascending: true });
 
   if (error) {
     console.error("Error fetching moments:", error);
@@ -147,16 +147,12 @@ export default async function CollectionPage({ params }: PageProps) {
                     )}
                   </div>
 
-                  {moment.image_url && (
-                    <div className="mb-4">
-                      <Image
-                        src={moment.image_url}
-                        alt={moment.title}
-                        width={400}
-                        height={300}
-                        className="rounded-lg object-cover w-full max-h-[300px]"
-                      />
-                    </div>
+                  {moment.media_url && (
+                    <MediaDisplay
+                      url={moment.media_url}
+                      alt={moment.title}
+                      title={moment.title}
+                    />
                   )}
 
                   {moment.content && (
