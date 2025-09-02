@@ -1,11 +1,30 @@
 import { supabase, Collection, Moment, User } from "@/lib/supabase";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import RomanticTimeline from "@/components/RomanticTimeline";
 
 interface PageProps {
   params: Promise<{
     collection_id: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { collection_id } = await params;
+  const collection = await getCollection(collection_id);
+
+  if (!collection) {
+    return {
+      title: "Collection Not Found",
+    };
+  }
+
+  return {
+    title: `${collection.name} - Rosette Demo`,
+    description: `View moments from the collection: ${collection.name}`,
+  };
 }
 
 export async function generateStaticParams() {
