@@ -358,7 +358,7 @@ function HeroSection({
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             className="text-gray-500"
           >
-            <HiArrowDown className="text-5xl" />
+            <HiArrowDown className="text-4xl" />
           </motion.div>
         </motion.div>
       </motion.div>
