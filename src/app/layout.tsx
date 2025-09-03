@@ -4,6 +4,8 @@ import {
   Geist_Mono,
   Montserrat,
   Dancing_Script,
+  Forum,
+  Open_Sans,
 } from "next/font/google";
 import "./globals.css";
 
@@ -27,6 +29,18 @@ const dancingScript = Dancing_Script({
   variable: "--font-dancing-script",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const forum = Forum({
+  variable: "--font-forum",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -67,7 +81,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${dancingScript.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${dancingScript.variable} ${forum.variable} ${openSans.variable} antialiased`}
       >
         {children}
       </body>

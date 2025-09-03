@@ -8,6 +8,7 @@ import {
   HiHeart,
   HiSparkles,
   HiArrowUp,
+  HiArrowDown,
 } from "react-icons/hi2";
 import MediaDisplay from "@/components/MediaDisplay";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -79,16 +80,18 @@ function AnniversaryCountdown({ targetDate }: CountdownProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-gradient-to-r from-pink-100 to-rose-100 rounded-2xl p-6 mt-6 border border-pink-200"
+      className="bg-gradient-to-r from-[#E5A9A9] to-[#EDECDB] rounded-2xl p-6 mt-6 border border-[#E5A9A9]"
     >
       <div className="flex items-center gap-2 mb-4">
-        <HiHeart className="text-pink-500 text-xl" />
-        <h4 className="font-semibold text-pink-800">Anniversary</h4>
+        <HiHeart className="text-[#E6748E] text-xl" />
+        <h4 className="font-semibold text-[#E6748E] font-open-sans">
+          Anniversary
+        </h4>
       </div>
       <div className="grid grid-cols-4 gap-3 text-center">
         <div className="bg-white/50 rounded-lg p-3">
           <motion.div
-            className="text-2xl font-bold text-pink-600"
+            className="text-2xl font-bold text-[#E6748E]"
             key={timeLeft.days}
             initial={{ scale: 1.2, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -96,13 +99,13 @@ function AnniversaryCountdown({ targetDate }: CountdownProps) {
           >
             {timeLeft.days}
           </motion.div>
-          <div className="text-xs text-pink-500">
+          <div className="text-xs text-[#E6748E] font-open-sans">
             {timeLeft.days === 1 ? "Day" : "Days"}
           </div>
         </div>
         <div className="bg-white/50 rounded-lg p-3">
           <motion.div
-            className="text-2xl font-bold text-pink-600"
+            className="text-2xl font-bold text-[#E6748E]"
             key={timeLeft.hours}
             initial={{ scale: 1.2, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -110,13 +113,13 @@ function AnniversaryCountdown({ targetDate }: CountdownProps) {
           >
             {timeLeft.hours}
           </motion.div>
-          <div className="text-xs text-pink-500">
+          <div className="text-xs text-[#E6748E] font-open-sans">
             {timeLeft.hours === 1 ? "Hour" : "Hours"}
           </div>
         </div>
         <div className="bg-white/50 rounded-lg p-3">
           <motion.div
-            className="text-2xl font-bold text-pink-600"
+            className="text-2xl font-bold text-[#E6748E]"
             key={timeLeft.minutes}
             initial={{ scale: 1.2, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -124,13 +127,13 @@ function AnniversaryCountdown({ targetDate }: CountdownProps) {
           >
             {timeLeft.minutes}
           </motion.div>
-          <div className="text-xs text-pink-500">
+          <div className="text-xs text-[#E6748E] font-open-sans">
             {timeLeft.minutes === 1 ? "Min" : "Mins"}
           </div>
         </div>
         <div className="bg-white/50 rounded-lg p-3">
           <motion.div
-            className="text-2xl font-bold text-pink-600"
+            className="text-2xl font-bold text-[#E6748E]"
             key={timeLeft.seconds}
             initial={{ scale: 1.2, opacity: 0.8 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -138,7 +141,7 @@ function AnniversaryCountdown({ targetDate }: CountdownProps) {
           >
             {timeLeft.seconds}
           </motion.div>
-          <div className="text-xs text-pink-500">
+          <div className="text-xs text-[#E6748E] font-open-sans">
             {timeLeft.seconds === 1 ? "Sec" : "Secs"}
           </div>
         </div>
@@ -150,19 +153,11 @@ function AnniversaryCountdown({ targetDate }: CountdownProps) {
 // Individual timeline item component
 function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "center center"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.95]);
-
   const isLeft = index % 2 === 0;
 
   return (
     <motion.div
       ref={ref}
-      style={{ scale }}
       className={`relative flex items-center ${
         isLeft
           ? "justify-center md:justify-start"
@@ -173,8 +168,8 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
       <motion.div
         className={`absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full z-10 ${
           isAnniversary
-            ? "bg-gradient-to-r from-pink-400 to-rose-400 ring-4 ring-pink-200"
-            : "bg-gradient-to-r from-blue-400 to-purple-400 ring-4 ring-blue-200"
+            ? "bg-gradient-to-r from-[#E6748E] to-[#E5A9A9] ring-4 ring-[#E5A9A9]"
+            : "bg-gradient-to-r from-[#6BB1AD] to-[#A7BCBD] ring-4 ring-[#A7BCBD]"
         }`}
         whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
@@ -186,30 +181,32 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
           isLeft ? "md:mr-auto" : "md:ml-auto"
         } relative`}
         style={{ zIndex: 20 + index }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300 }}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
       >
         <div
           className={`bg-white backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-gray-200/50 ${
-            isAnniversary ? "ring-2 ring-pink-200" : ""
+            isAnniversary ? "ring-2 ring-[#E5A9A9]" : ""
           }`}
         >
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
             <div>
               <motion.h3
-                className={`text-xl font-bold bg-gradient-to-r ${
+                className={`text-2xl font-bold bg-gradient-to-r ${
                   isAnniversary
-                    ? "from-pink-600 to-rose-600"
-                    : "from-blue-600 to-purple-600"
-                } bg-clip-text text-transparent`}
+                    ? "from-[#E6748E] to-[#E5A9A9]"
+                    : "from-[#6BB1AD] to-[#A7BCBD]"
+                } bg-clip-text text-transparent font-forum mb-6`}
                 layoutId={`title-${moment.id}`}
               >
                 {moment.title}
               </motion.h3>
               <div className="flex items-center gap-2 mt-1">
                 <HiClock className="text-gray-400 text-sm" />
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500 font-open-sans">
                   {new Date(moment.started_at).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -223,7 +220,7 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 2 }}
               >
-                <HiSparkles className="text-pink-500 text-xl" />
+                <HiSparkles className="text-[#E6748E] text-xl" />
               </motion.div>
             )}
           </div>
@@ -233,8 +230,8 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
             <motion.span
               className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-4 ${
                 isAnniversary
-                  ? "bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800"
-                  : "bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800"
+                  ? "bg-gradient-to-r from-[#E5A9A9] to-[#EDECDB] text-[#E6748E]"
+                  : "bg-gradient-to-r from-[#6BB1AD] to-[#A7BCBD] text-white"
               }`}
               whileHover={{ scale: 1.05 }}
             >
@@ -260,7 +257,7 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
 
           {/* Content */}
           {moment.content && (
-            <p className="text-gray-700 mb-4 leading-relaxed">
+            <p className="text-gray-700 mb-4 leading-relaxed font-open-sans">
               {moment.content}
             </p>
           )}
@@ -269,7 +266,7 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
           {(moment.city || moment.country) && (
             <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
               <HiMapPin className="text-red-400" />
-              <span>
+              <span className="font-open-sans">
                 {[moment.city, moment.country].filter(Boolean).join(", ")}
               </span>
             </div>
@@ -279,7 +276,7 @@ function TimelineItem({ moment, index, isAnniversary }: TimelineItemProps) {
           {moment.completed_at && (
             <div className="flex items-center gap-2 text-sm text-green-600 mb-4">
               <HiCheckCircle />
-              <span>
+              <span className="font-open-sans">
                 Completed on{" "}
                 {new Date(moment.completed_at).toLocaleDateString()}
               </span>
@@ -311,9 +308,9 @@ function HeroSection({
   return (
     <motion.section
       style={{ y, opacity }}
-      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50"
+      className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-[#EDECDB] via-[#E5A9A9] to-[#E6748E]"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-pink-400/10 to-rose-400/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#E6748E]/10 to-[#6BB1AD]/10" />
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -321,7 +318,7 @@ function HeroSection({
         className="text-center z-10 px-4"
       >
         <motion.h1
-          className="text-7xl md:text-9xl font-bold bg-gradient-to-r from-pink-600 via-rose-500 to-orange-500 bg-clip-text text-transparent mb-6 leading-tight py-2"
+          className="text-7xl md:text-9xl font-bold bg-gradient-to-r from-[#E6748E] via-[#E5A9A9] to-[#6BB1AD] bg-clip-text text-transparent mb-6 leading-tight py-2"
           style={{
             backgroundSize: "200% 200%",
             lineHeight: "1.1",
@@ -344,9 +341,9 @@ function HeroSection({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-xl text-gray-600 mb-8"
+            className="text-4xl text-gray-600 mb-16 font-forum"
           >
-            A love story by {user.name}
+            A Love Story by {user.name}
           </motion.p>
         )}
 
@@ -354,11 +351,15 @@ function HeroSection({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="flex items-center justify-center gap-2 text-gray-500"
+          className="flex items-center justify-center"
         >
-          <HiHeart className="text-pink-500" />
-          <span>Scroll to explore</span>
-          <HiHeart className="text-pink-500" />
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            className="text-gray-500"
+          >
+            <HiArrowDown className="text-5xl" />
+          </motion.div>
         </motion.div>
       </motion.div>
     </motion.section>
@@ -391,7 +392,7 @@ export default function RomanticTimeline({
   }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#EDECDB] via-white to-[#E5A9A9]">
       {/* Hero Section */}
       <HeroSection collection={collection} user={user} />
 
@@ -401,7 +402,7 @@ export default function RomanticTimeline({
         <div
           className="fixed inset-0 z-0 opacity-40"
           style={{
-            backgroundImage: "url(/images/background.avif)",
+            backgroundImage: "url(/images/background.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -415,12 +416,9 @@ export default function RomanticTimeline({
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-5xl font-normal bg-gradient-to-r from-[#E6748E] to-[#6BB1AD] bg-clip-text text-transparent mb-4 py-4 font-forum">
               The Story of Us
             </h2>
-            <p className="text-lg text-gray-600">
-              {moments.length} beautiful moments and counting...
-            </p>
           </motion.div>
 
           {moments.length === 0 ? (
@@ -429,8 +427,8 @@ export default function RomanticTimeline({
               animate={{ opacity: 1 }}
               className="text-center py-20"
             >
-              <HiHeart className="text-6xl text-pink-300 mx-auto mb-4" />
-              <p className="text-xl text-gray-500">
+              <HiHeart className="text-6xl text-[#E5A9A9] mx-auto mb-4" />
+              <p className="text-xl text-gray-500 font-open-sans">
                 Your love story is waiting to be written...
               </p>
             </motion.div>
@@ -438,7 +436,7 @@ export default function RomanticTimeline({
             <div className="relative">
               {/* Vertical timeline line - only spans the timeline items */}
               <div
-                className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-pink-200 via-blue-200 to-purple-200 rounded-full"
+                className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-[#E5A9A9] via-[#A7BCBD] to-[#6BB1AD] rounded-full"
                 style={{
                   top: "2rem",
                   bottom: "2rem",
@@ -472,7 +470,7 @@ export default function RomanticTimeline({
       >
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#E6748E] to-[#6BB1AD] hover:from-[#E5A9A9] hover:to-[#A7BCBD] text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-open-sans"
         >
           <HiArrowUp className="transition-transform group-hover:-translate-y-1" />
           Back to Top

@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Salt Lake Color Palette */
+  --veranda-blue: #6bb1ad;
+  --sky-cloud: #a7bcbd;
+  --lychee: #edecdb;
+  --melon: #e5a9a9;
+  --cupid-pink: #e6748e;
 }
 
 @theme inline {
@@ -11,6 +18,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-dancing-script: var(--font-dancing-script);
+  --font-forum: "Forum", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,4 +37,12 @@ body {
 /* Custom font classes */
 .font-dancing-script {
   font-family: var(--font-dancing-script), cursive;
+}
+
+.font-forum {
+  font-family: var(--font-forum), serif;
+}
+
+.font-open-sans {
+  font-family: var(--font-open-sans), sans-serif;
 }
